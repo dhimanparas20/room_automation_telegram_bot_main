@@ -17,8 +17,8 @@ This is a Python-based Telegram bot using the Pyrogram client, designed to trigg
 
 ### Clone the Repository
 ```bash
-git clone <your-repository-url>
-cd <your-repository-folder>
+git clone https://github.com/dhimanparas20/room_automation_telegram_bot_main
+cd room_automation_telegram_bot
 ```
 
 ### Setup Environment Variables
