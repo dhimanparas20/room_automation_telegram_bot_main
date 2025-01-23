@@ -1,10 +1,11 @@
 from dotenv import load_dotenv
-from os import getenv
+from os import getenv,popen
 from .pyMongo import MongoDB
 from .websocks import MQTTWebSocketClient
 import speedtest
-import psutil
-import time
+import shutil
+import platform
+import subprocess
 
 # Load environment variables
 load_dotenv()
@@ -48,45 +49,46 @@ mqtt_client = MQTTWebSocketClient(
 )
 mqtt_client.connect()
 
-#Sorts File Size units
-def get_file_size(bytes):
-    bytes = int(bytes)
-    if bytes < 1024:
-        return bytes,"B"
-    elif bytes >= 1024 and bytes < 1024*1024:
-        return f"{bytes/1024:.1f} KB"
-    elif bytes >= 1024*1024 and bytes < 1024*1024*1024:
-        return f"{bytes/(1024*1024):.1f} MB"
-    else:
-        return f"{bytes/(1024*1024*1024):.1f} GB"
 
-# Function to get system usage
+# Function to get system usage without psutil
 def get_system_usage():
-    # Get CPU usage percentage
-    cpu_usage = psutil.cpu_percent(interval=0)
-    
-    # Get RAM usage information
-    memory_info = psutil.virtual_memory()
-    ram_usage = memory_info.percent
-    
-    # Get disk usage information
-    disk_usage = psutil.disk_usage("./")
-    disk_usage_percent = disk_usage.percent
-    disk_used = disk_usage.used
-    disk_total = disk_usage.total
-    disk_available = disk_usage.free
+    # Get CPU usage percentage using `os` and `subprocess`
+    if platform.system() == "Linux":
+        cpu_usage = subprocess.check_output(
+            ["sh", "-c", "grep 'cpu ' /proc/stat | awk '{usage=($2+$4)*100/($2+$4+$5)} END {print usage}'"]
+        ).decode().strip()
+    else:
+        cpu_usage = "N/A (only supported on Linux)"
+
+    # Get RAM usage information using `os`
+    total_memory, used_memory, free_memory = map(
+        int, popen("free -t -m").readlines()[-1].split()[1:]
+    )
+    ram_usage_percent = int((used_memory / total_memory) * 100)  # Convert to integer
+
+    # Get disk usage information using `shutil`
+    total, used, free = shutil.disk_usage("./")
+    disk_usage_percent = int((used / total) * 100)  # Convert to integer
 
     # Format the results
     results = {
         "cpu_usage_percent": cpu_usage,
-        "ram_usage_percent": ram_usage,
-        "disk_usage_percent": disk_usage_percent,
-        "disk_used_space": get_file_size(disk_used),
-        "disk_total_space": get_file_size(disk_total),
-        "disk_available_space": get_file_size(disk_available)
+        "ram_usage_percent": ram_usage_percent,  # Integer value
+        "disk_usage_percent": disk_usage_percent,  # Integer value
+        "disk_used_space": get_file_size(used),
+        "disk_total_space": get_file_size(total),
+        "disk_available_space": get_file_size(free),
     }
-    
-    return results  
+
+    return results
+
+# Helper function to format file size
+def get_file_size(size_in_bytes):
+    for unit in ["B", "KB", "MB", "GB", "TB"]:
+        if size_in_bytes < 1024:
+            return f"{size_in_bytes:.2f} {unit}"
+        size_in_bytes /= 1024
+    return f"{size_in_bytes:.2f} PB"
 
 # Perform SpeedTest
 def perform_speedtest():
