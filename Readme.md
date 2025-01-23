@@ -29,24 +29,24 @@ cd room_automation_telegram_bot
 2. Fill in the required environment variables in the `.env` file:
    ```env
    # Telegram API Configuration
-   BOT_TOKEN=6606146224:AAHs2D5D7o3aCCJl7TWhL9wovCmXN0QWZXA
-   API_ID=2639179
-   API_HASH=7e40ff5b5676e9f355ec4b610abb09a1
+   BOT_TOKEN=
+   API_ID=
+   API_HASH=
 
    # MQTT Configuration
-   WEBSOCK_BROKER_ADDRESS=mqtt.mstservices.tech
-   WEBSOCK_PORT=443
+   WEBSOCK_BROKER_ADDRESS=
+   WEBSOCK_PORT=
    WEBSOCK_USE_SSL=true
    USE_CREDS=true
-   MQTT_USER=mst
-   MQTT_PASS=1212
+   MQTT_USER=
+   MQTT_PASS=
    PINS=D1,D2,D3,D4
    QOS=1
    CLEAN_SESSION=true
    RETAINED=true
 
    # MongoDB Configuration
-   CONNECTION_STRING=mongodb+srv://ken:2069@automation.tl2hwga.mongodb.net/?retryWrites=true&w=majority&appName=Automation
+   CONNECTION_STRING=
    DB_NAME=tgautomation
    COLLECTION_NAME=users
    ```
