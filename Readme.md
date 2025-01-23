@@ -98,6 +98,8 @@ cd room_automation_telegram_bot
 | `/settoken`      | Attach or update a token (requires token). |
 | `/gettoken`      | Displays all attached tokens.              |
 | `/revoketoken`   | Detaches all tokens.                       |
+| `/speedtest`     | Do a Server Speedtest                      |
+| `/stats`         | Get Server Stats                           |
 | `d1 <0/1>`       | Toggle device D1 (0 = off, 1 = on).        |
 | `d2 <0/1>`       | Toggle device D2 (0 = off, 1 = on).        |
 | `d3 <0/1>`       | Toggle device D3 (0 = off, 1 = on).        |
