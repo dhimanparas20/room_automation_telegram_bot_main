@@ -1,0 +1,9 @@
+services:
+  tg-bot:
+    container_name: tg_bot_service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file: 
+      - .env

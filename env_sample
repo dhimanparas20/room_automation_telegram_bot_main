@@ -1,0 +1,21 @@
+# get your api from 'https://my.telegram.org/auth' and bot token from 't.me/@BotFather'
+BOT_TOKEN =
+API_ID =
+API_HASH =
+
+#MQTT
+WEBSOCK_BROKER_ADDRESS=
+WEBSOCK_PORT=
+WEBSOCK_USE_SSL=true
+USE_CREDS=true
+MQTT_USER=
+MQTT_PASS=
+PINS=D1,D2,D3,D4
+QOS=1
+CLEAN_SESSION=true
+RETAINED=true
+
+#mongo
+CONNECTION_STRING = 
+DB_NAME = tgautomation
+COLLECTION_NAME = users
