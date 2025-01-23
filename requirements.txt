@@ -8,7 +8,6 @@ icecream==2.1.4
 idna==3.10
 paho-mqtt==2.1.0
 passlib==1.7.4
-psutil==6.1.1
 pyaes==1.6.1
 Pygments==2.19.1
 pymongo==4.10.1

@@ -61,10 +61,13 @@ def get_system_usage():
         cpu_usage = "N/A (only supported on Linux)"
 
     # Get RAM usage information using `os`
-    total_memory, used_memory, free_memory = map(
-        int, popen("free -t -m").readlines()[-1].split()[1:]
-    )
-    ram_usage_percent = int((used_memory / total_memory) * 100)  # Convert to integer
+    try:
+        ram_info = popen("free -m").readlines()[1].split()
+        total_memory = int(ram_info[1])
+        used_memory = int(ram_info[2])
+        ram_usage_percent = int((used_memory / total_memory) * 100)  # Convert to integer
+    except IndexError:
+        ram_usage_percent = "N/A"
 
     # Get disk usage information using `shutil`
     total, used, free = shutil.disk_usage("./")
