@@ -15,7 +15,14 @@ def insertOrUpdate(data:dict):
     if resp:return "✔️ New Data Inserted"
     return False
 
-
+system_stats = get_system_usage()
+print("===========SYSTEM STATUS============")
+print(f"CPU Usage: {system_stats['cpu_usage_percent']}%")
+print(f"RAM Usage: {system_stats['ram_usage_percent']}%")
+print(f"Disk Usage: {system_stats['disk_usage_percent']}%")
+print(f"Space Free: {system_stats['disk_available_space']}/{system_stats['disk_total_space']}")
+print(f"Space Used: {system_stats['disk_used_space']}/{system_stats['disk_total_space']}")
+print("======================================")
 # Main Method 
 async def main():
     app = Client("tg_bot",api_id=API_ID, api_hash=API_HASH,bot_token=BOT_TOKEN)
@@ -63,6 +70,7 @@ async def main():
                 if response:await message.reply_text("✔️ Done", quote=True,parse_mode=enums.ParseMode.MARKDOWN)
                 else:await message.reply_text("⚠️ No Token Added", quote=True,parse_mode=enums.ParseMode.MARKDOWN)
         
+            # Trigger the switches
             elif parts[0].upper() in PINS and list_len==2 and int(parts[1]) in [0,1]: 
                 # await message.reply_text(parts[1], quote=False) 
                 user = mongoClient.fetch({"userid":uid})   
@@ -77,6 +85,37 @@ async def main():
 
                 # await client.edit_message_text(chat_id=cid, message_id=sentdata.id, text=f"Exception: {e}")
                 # await message.reply_text(msg, quote=True,parse_mode=enums.ParseMode.MARKDOWN)
+
+            # Do a speedtest
+            elif parts[0] == "/speedtest" and list_len == 1:
+                sentdata = await message.reply_text("Running the Horses. Please Wait", quote=True,parse_mode=enums.ParseMode.MARKDOWN)
+                start_time = time.time()
+                ic("Performing Speedtest")
+                speedtest = perform_speedtest()
+                ic("Speedtest Done")
+                stop_time = time.time()-start_time
+                if speedtest:
+                    msg = (
+                        f"**📥 Download Speed:** {get_file_size(speedtest['download_speed']/8)}/s \n"
+                        f"**📤 Upload Speed:** {get_file_size(speedtest['upload_speed']/8)}/s\n"
+                        f"**🏓 Ping:** {speedtest['ping']} ms\n"
+                        f"**⌛ Time Taken:** {stop_time:.0f}s"
+                    )
+                    await client.edit_message_text(chat_id=cid, message_id=sentdata.id, text=msg)
+                else:    
+                    await client.edit_message_text(chat_id=cid, message_id=sentdata.id, text="Unable to Fetch Speed :-( ")
+
+            # Fetch Server Stats
+            elif parts[0] == "/stats" and list_len == 1:
+                    stats = get_system_usage()
+                    msg = (
+                        f"**CPU Usage:** {stats['cpu_usage_percent']}%\n"
+                        f"**RAM Usage:** {stats['ram_usage_percent']}%\n"
+                        f"**Disk Usage:** {stats['disk_usage_percent']}%\n"
+                        f"**Disk Used:** {stats['disk_used_space']}/{stats['disk_total_space']}\n"
+                        f"**Disk Free:** {stats['disk_available_space']}/{stats['disk_total_space']}\n"
+                    )
+                    await message.reply_text(msg, quote=True,parse_mode=enums.ParseMode.MARKDOWN)
 
             else:
                 await message.reply_text("No Valid Command\ntry /help for Help", quote=True,parse_mode=enums.ParseMode.MARKDOWN) 
