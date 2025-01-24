@@ -107,6 +107,56 @@ cd room_automation_telegram_bot
 
 ---
 
+I'll help you enhance the README with a CI/CD section focusing on GitHub Actions. Here's a comprehensive addition:
+
+---
+
+## CI/CD Pipeline Configuration
+
+### GitHub Actions Workflow
+
+The provided GitHub Actions workflow enables automatic deployment with the following environment variables:
+
+#### Required GitHub Secrets
+
+1. `SSH_HOST`: Server's IP address or hostname
+2. `SSH_USER`: SSH username for server access
+3. `SSH_PASSWORD`: SSH password or passphrase
+4. `WORK_DIR`: Full path to the project directory on the remote server
+5. `MAIN_BRANCH`: Git branch to pull (typically `main`)
+
+#### Setup Steps
+
+1. Navigate to your GitHub repository's Settings
+2. Select "Secrets and variables" > "Actions"
+3. Click "New repository secret"
+4. Add each secret with its corresponding value:
+   - `SSH_HOST`: example.com
+   - `SSH_USER`: your_username
+   - `SSH_PASSWORD`: your_ssh_password
+   - `WORK_DIR`: /path/to/project
+   - `MAIN_BRANCH`: main
+
+#### Workflow Execution
+
+The workflow can be triggered:
+- Manually via "workflow_dispatch"
+- Uncomment push triggers for automatic deployment on code changes
+
+#### Workflow Steps
+1. Installs `sshpass`
+2. Connects to remote server
+3. Pulls latest code
+4. Rebuilds Docker containers
+5. Restarts services
+6. Prunes unused Docker images
+
+### Best Practices
+
+- Use SSH keys instead of passwords for enhanced security
+- Implement branch protection rules
+- Configure separate workflows for testing and deployment
+
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
