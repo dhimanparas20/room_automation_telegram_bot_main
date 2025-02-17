@@ -1,19 +1,28 @@
-# get your api from 'https://my.telegram.org/auth' and bot token from 't.me/@BotFather'
+# Caddy
+WEB_DOMAIN=
+
+# telegram
 BOT_TOKEN =
-API_ID =
-API_HASH =
+API_ID =  
+API_HASH = 
+
+#mongo
+MONGO_CONNECTION_STRING=
 
 #MQTT
 WEBSOCK_BROKER_ADDRESS=
 WEBSOCK_PORT=
-WEBSOCK_USE_SSL=true
-USE_CREDS=true
+WEBSOCK_USE_SSL=True
+VALID_TOKEN=
+USE_CREDS=True
 MQTT_USER=
 MQTT_PASS=
-PINS=D1,D2,D3,D4
-QOS=1
-CLEAN_SESSION=true
-RETAINED=true
+QOS=0
+CLEAN_SESSION=True
+RETAINED=True
+PINS=D1,D2,D3,D4,D5
+SWITCH_NAME=Light,Lamp,Fan,esp
 
-#mongo
-CONNECTION_STRING = 
+# Flask
+DEBUG=True
+HOST=0.0.0.0
