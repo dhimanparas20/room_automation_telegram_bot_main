@@ -16,7 +16,7 @@ API_ID = int(getenv('API_ID'))
 API_HASH = getenv('API_HASH')
 
 # Mongo Configuration
-CONNECTION_STRING = getenv('CONNECTION_STRING')
+MONGO_CONNECTION_STRING = getenv('MONGO_CONNECTION_STRING')
 DB_NAME = "tgautomation"
 COLLECTION_NAME = "users"
 
@@ -33,7 +33,7 @@ QOS = int(getenv('QOS'))
 PINS = getenv('PINS').split(",")
 
 # Initialize Mongo DB Client
-mongoClient = MongoDB(db_name=DB_NAME,collection_name=COLLECTION_NAME,connection_str=CONNECTION_STRING)
+mongoClient = MongoDB(db_name=DB_NAME,collection_name=COLLECTION_NAME,connection_str=MONGO_CONNECTION_STRING)
 
 # Initialize MQTT WebSocket Client
 mqtt_client = MQTTWebSocketClient(
