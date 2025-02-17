@@ -17,8 +17,8 @@ API_HASH = getenv('API_HASH')
 
 # Mongo Configuration
 CONNECTION_STRING = getenv('CONNECTION_STRING')
-DB_NAME = getenv('DB_NAME')
-COLLECTION_NAME = getenv('COLLECTION_NAME')
+DB_NAME = "tgautomation"
+COLLECTION_NAME = "users"
 
 # MQTT Configuration
 WEBSOCK_BROKER_ADDRESS = getenv('WEBSOCK_BROKER_ADDRESS')
