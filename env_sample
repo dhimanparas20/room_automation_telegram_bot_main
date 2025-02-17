@@ -17,5 +17,3 @@ RETAINED=true
 
 #mongo
 CONNECTION_STRING = 
-DB_NAME = tgautomation
-COLLECTION_NAME = users
