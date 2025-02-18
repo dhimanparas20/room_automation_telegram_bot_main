@@ -18,6 +18,7 @@ async def main():
     app = Client("tg_bot",api_id=API_ID, api_hash=API_HASH,bot_token=BOT_TOKEN)
 
     # loop = asyncio.get_running_loop()  # Get the main event loop
+    
     mqtt_client = MQTTWebSocketClient(
         host=WEBSOCK_BROKER_ADDRESS,
         port=WEBSOCK_PORT,
@@ -29,6 +30,7 @@ async def main():
         qos=QOS,
         use_creds=USE_CREDS
     )
+    # Connect to MQTT client
     await mqtt_client.connect()
 
     # Subscribe to online for all the tokens
@@ -67,7 +69,7 @@ async def main():
         mqtt_client.set_message_callback(mqtt_message_callback) 
 
         ic("Listening to messages on @mstapibot")  
-        await app.send_message(chat_id=6848546800, text="🟢 Bot is Online",parse_mode=enums.ParseMode.MARKDOWN)
+        await app.send_message(chat_id=6848546800, text="🤖 Bot is Online",parse_mode=enums.ParseMode.MARKDOWN)
     
         @app.on_message()
         async def handle(client,message):
