@@ -35,21 +35,6 @@ PINS = getenv('PINS').split(",")
 # Initialize Mongo DB Client
 mongoClient = MongoDB(db_name=DB_NAME,collection_name=COLLECTION_NAME,connection_str=MONGO_CONNECTION_STRING)
 
-# Initialize MQTT WebSocket Client
-mqtt_client = MQTTWebSocketClient(
-    host=WEBSOCK_BROKER_ADDRESS,
-    port=WEBSOCK_PORT,
-    username=MQTT_USER,
-    password=MQTT_PASS,
-    use_ssl=WEBSOCK_USE_SSL,
-    clean_session=CLEAN_SESSION,
-    retained=RETAINED,
-    qos=QOS,
-    use_creds=USE_CREDS
-)
-mqtt_client.connect()
-
-
 # Function to get system usage without psutil
 def get_system_usage():
     # Get CPU usage percentage using `os` and `subprocess`
