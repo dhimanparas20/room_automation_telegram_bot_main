@@ -51,10 +51,9 @@ async def main():
         return False 
 
     async with app:
-        dataset = mongoClient.fetch()
         # Send message When Board Goes Offline And Comes Back Online
         async def mqtt_message_callback(topic, payload):
-            
+            dataset = mongoClient.fetch()
             for data in dataset:
                 db_topic = data["token"]+"/online"
                 if db_topic == topic:
