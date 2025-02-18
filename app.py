@@ -69,7 +69,7 @@ async def main():
         mqtt_client.set_message_callback(mqtt_message_callback) 
 
         ic("Listening to messages on @mstapibot")  
-        await app.send_message(chat_id=6848546800, text="🤖 Bot is Online",parse_mode=enums.ParseMode.MARKDOWN)
+        await app.send_message(chat_id=6848546800, text="🤖 Bot is Running 😊",parse_mode=enums.ParseMode.MARKDOWN)
     
         @app.on_message()
         async def handle(client,message):
